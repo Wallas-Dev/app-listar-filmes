@@ -1,0 +1,62 @@
+<html>
+
+<body>
+    <style>
+        .tituloFilme{
+            font-weight: bold;
+        }
+        .description{
+            font-weight: normal;
+        }
+        .visu{
+            font-weight: normal;
+        }
+    </style>
+
+    <div class="container">
+
+    </div>
+
+    <script>
+        fetch('https://api.themoviedb.org/3/movie/popular?api_key=506fadb0256c13349acc05dabebf9604&language=en-US&page=1', {
+            method: 'GET'
+        })
+            .then(response => response.json())
+            .then(function (json) {
+                //console.log(json)
+                var container = document.querySelector('.container');
+
+                json.results.map(function (val) {
+                    container.innerHTML += `
+
+                <div style="cursor: Pointer; " class="tituloFilme">`+ val.title + ` <span class="visu">ver mais...</span>`+`
+                <div style="display: none;" class="description">`+ val.overview + `</div><hr>
+                </div>`;
+                })
+
+                var titulos = document.querySelectorAll('.tituloFilme');
+                console.log(titulos.length);
+                for (var i = 0; i < titulos.length; i++) {
+                    titulos[i].addEventListener('click', function (t) {
+
+                        if (t.target.querySelector('.description').style.display == "none") {
+                            
+                            t.target.querySelector('.description').style.display = "block";
+                            t.target.querySelector('.visu').innerHTML = "ver menos...";
+
+                        }else{
+                            t.target.querySelector('.description').style.display = "none";
+                            t.target.querySelector('.visu').innerHTML = "ver mais...";
+                            
+                        }
+                    })
+                }
+            });
+
+
+
+
+    </script>
+</body>
+
+</html>
